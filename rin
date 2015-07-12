@@ -1,0 +1,12 @@
+#!/bin/sh
+repo="$1"
+name=$(echo "$repo" | cut -d "/" -f 2)
+args="${*:2}"
+
+script=$(mktemp -t rin-XXXX)
+curl -Ls "https://github.com/$repo/raw/master/$name" > "$script"
+chmod +x "$script"
+
+$script "$args"
+
+rm "$script"
